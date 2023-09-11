@@ -41,7 +41,9 @@ function content_replacement( $content ) {
 		$replacement = '/';
 	}
 
-	$content = str_replace( "href=\"{$site_url}", "href=\"{$replacement}", $content );
+	$media_dir = str_replace( $site_url, '', wp_upload_dir()['baseurl'] );
+
+	$content = preg_replace( "#href=\"{$site_url}(?!{$media_dir})#", "href=\"{$replacement}", $content );
 
 	return str_replace( 'href="//', 'href="/', $content );
 }
